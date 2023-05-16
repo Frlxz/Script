@@ -1,2 +1,2 @@
-local key = "You"
+local key = ""
 return key
