@@ -31,6 +31,16 @@ elseif player.UserId == 1665028672 then
 Whitelisted()
 elseif player.UserId == 3063296469 then
 Whitelisted()
+elseif player.UserId == 4612122883 then
+Whitelisted()
+elseif player.UserId == 440060704 then
+Whitelisted()
+elseif player.UserId == 0 then
+Whitelisted()
+elseif player.UserId == 0 then
+Whitelisted()
+elseif player.UserId == 0 then
+Whitelisted()
 else
 print("Nadir Hub")
 end
