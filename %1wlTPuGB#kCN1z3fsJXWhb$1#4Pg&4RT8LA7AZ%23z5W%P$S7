@@ -35,7 +35,7 @@ elseif player.UserId == 4612122883 then
 Whitelisted()
 elseif player.UserId == 440060704 then
 Whitelisted()
-elseif player.UserId == 0 then
+elseif player.UserId == 667366641 then
 Whitelisted()
 elseif player.UserId == 0 then
 Whitelisted()
