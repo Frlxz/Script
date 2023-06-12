@@ -1,5 +1,7 @@
 local player = game.Players.LocalPlayer
+
 if player.UserId == 1395346733 then
+
 Whitelisted()
 elseif player.UserId == 3154889325 then
 Whitelisted()
@@ -44,6 +46,10 @@ Whitelisted()
 elseif player.UserId == 1443659947 then
 Whitelisted()
 elseif player.UserId == 1188881967 then
+Whitelisted()
+elseif player.UserId == 1465283478 then
+Whitelisted()
+elseif player.UserId == 3869682127 then
 Whitelisted()
 else
 print("Nadir Hub")
