@@ -1,0 +1,265 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Anti-Afk/main/Script"))()
+local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
+
+-- Function
+function InfiniteStamina()
+	for _,v in pairs(getloadedmodules()) do 
+		if v.Name == "M_H" then
+			local module = require(v)
+			local old; old = hookfunction(module.TakeStamina, function(smth, amount)
+				if amount > 0 then return old(smth, -0.5) end 
+				return old(smth, amount)
+			end)
+		end
+	end
+end
+
+function NoFallDamage()
+	local NoFallDamage; NoFallDamage = hookmetamethod(game, "__namecall", function(...)
+		local Method = getnamecallmethod()
+		local Args = {...}
+
+		if Method == "FireServer" then 
+			if tostring(...) == "FD_Event" then 
+				return
+			end
+		end
+
+		return NoFallDamage(...)
+	end)
+end
+
+function DisableInfStaminaNotif()
+local NofiticationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Notification/main/NotificationHolder"))()
+local Nofitication = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Notification/main/Notification"))()
+
+local function Notify(Title, Text, Time)
+    Nofitication:Notify(
+        {Title = Title, Description = Text},
+        {OutlineColor = Color3.fromRGB(100, 100, 100),Time = Time or 20, Type = "default"} --[[default, option, image]]
+    )
+end
+
+Notify("Notification", "Reset To Disable Infinite Stamina.")
+end
+
+function ActivedNotif()
+local NofiticationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Notification/main/NotificationHolder"))()
+local Nofitication = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Notification/main/Notification"))()
+
+local function Notify(Title, Text, Time)
+    Nofitication:Notify(
+        {Title = Title, Description = Text},
+        {OutlineColor = Color3.fromRGB(100, 100, 100),Time = Time or 3, Type = "default"} --[[default, option, image]]
+    )
+end
+
+Notify("Notification", "Actived.")
+end
+
+function RakeEsp()
+    workspace.ChildAdded:Connect(function()
+		if workspace:FindFirstChild("Rake") then
+			for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+				if v.Name == 'Rake' then -- checks if it has a handle and if its a touchtransmitter
+					local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+					local TextLabel = Instance.new('TextLabel') -- makes text label
+
+					BillboardGui.Parent = v.Head -- what the billboardgui goes into
+					BillboardGui.AlwaysOnTop = true -- if its on top or not
+					BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+					BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+					TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+					TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+					TextLabel.BackgroundTransparency = 1 -- transparency
+					TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+					TextLabel.Text = "The Rake" -- what the label says
+					TextLabel.TextColor3 = Color3.new(255, 0, 0) -- color
+					TextLabel.TextScaled = false -- if the text is scaled or not
+				end
+			end
+		end
+	end)
+	if workspace:FindFirstChild("Rake") then
+		for i,v in pairs(game.Workspace:GetDescendants()) do -- grabs everything from workspace
+			if v.Name == 'Rake' then -- checks if it has a handle and if its a touchtransmitter
+				local BillboardGui = Instance.new('BillboardGui') -- Makes Billboardgui
+				local TextLabel = Instance.new('TextLabel') -- makes text label
+
+				BillboardGui.Parent = v.Head -- what the billboardgui goes into
+				BillboardGui.AlwaysOnTop = true -- if its on top or not
+				BillboardGui.Size = UDim2.new(0, 50, 0, 50) -- size of it
+				BillboardGui.StudsOffset = Vector3.new(0,2,0)
+
+				TextLabel.Parent = BillboardGui -- putting textlabel into billboardgui
+				TextLabel.BackgroundColor3 = Color3.new(1,1,1) -- color
+				TextLabel.BackgroundTransparency = 1 -- transparency
+				TextLabel.Size = UDim2.new(1, 0, 1, 0) -- size
+				TextLabel.Text = "The Rake" -- what the label says
+				TextLabel.TextColor3 = Color3.new(255, 0, 0) -- color
+				TextLabel.TextScaled = false -- if the text is scaled or not
+			end
+		end
+	end
+end
+
+function PlayerEsp()
+local Player = game:GetService("Players").LocalPlayer
+local Camera = game:GetService("Workspace").CurrentCamera
+local Mouse = Player:GetMouse()
+
+local function Dist(pointA, pointB) -- magnitude errors for some reason  : (
+    return math.sqrt(math.pow(pointA.X - pointB.X, 2) + math.pow(pointA.Y - pointB.Y, 2))
+end
+
+local function GetClosest(points, dest)
+    local min  = math.huge 
+    local closest = nil
+    for _,v in pairs(points) do
+        local dist = Dist(v, dest)
+        if dist < min then
+            min = dist
+            closest = v
+        end
+    end
+    return closest
+end
+
+local function DrawESP(plr)
+    local Box = Drawing.new("Quad")
+    Box.Visible = false
+    Box.PointA = Vector2.new(0, 0)
+    Box.PointB = Vector2.new(0, 0)
+    Box.PointC = Vector2.new(0, 0)
+    Box.PointD = Vector2.new(0, 0)
+    Box.Color = Color3.fromRGB(0, 255, 0)
+    Box.Thickness = 2
+    Box.Transparency = 1
+
+    local function Update()
+        local c
+        c = game:GetService("RunService").RenderStepped:Connect(function()
+            if plr.Character ~= nil and plr.Character:FindFirstChildOfClass("Humanoid") ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") ~= nil and plr.Character:FindFirstChildOfClass("Humanoid").Health > 0 and plr.Character:FindFirstChild("Head") ~= nil then
+                local pos, vis = Camera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position)
+                if vis then 
+                    local points = {}
+                    local c = 0
+                    for _,v in pairs(plr.Character:GetChildren()) do
+                        if v:IsA("BasePart") then
+                            c = c + 1
+                            local p = Camera:WorldToViewportPoint(v.Position)
+                            if v.Name == "HumanoidRootPart" then
+                                p = Camera:WorldToViewportPoint((v.CFrame * CFrame.new(0, 0, -v.Size.Z)).p)
+                            elseif v.Name == "Head" then
+                                p = Camera:WorldToViewportPoint((v.CFrame * CFrame.new(0, v.Size.Y/2, v.Size.Z/1.25)).p)
+                            elseif string.match(v.Name, "Left") then
+                                p = Camera:WorldToViewportPoint((v.CFrame * CFrame.new(-v.Size.X/2, 0, 0)).p)
+                            elseif string.match(v.Name, "Right") then
+                                p = Camera:WorldToViewportPoint((v.CFrame * CFrame.new(v.Size.X/2, 0, 0)).p)
+                            end
+                            points[c] = p
+                        end
+                    end
+                    local Left = GetClosest(points, Vector2.new(0, pos.Y))
+                    local Right = GetClosest(points, Vector2.new(Camera.ViewportSize.X, pos.Y))
+                    local Top = GetClosest(points, Vector2.new(pos.X, 0))
+                    local Bottom = GetClosest(points, Vector2.new(pos.X, Camera.ViewportSize.Y))
+
+                    if Left ~= nil and Right ~= nil and Top ~= nil and Bottom ~= nil then
+                        Box.PointA = Vector2.new(Right.X, Top.Y)
+                        Box.PointB = Vector2.new(Left.X, Top.Y)
+                        Box.PointC = Vector2.new(Left.X, Bottom.Y)
+                        Box.PointD = Vector2.new(Right.X, Bottom.Y)
+
+                        Box.Visible = true
+                    else 
+                        Box.Visible = false
+                    end
+                else 
+                    Box.Visible = false
+                end
+            else
+                Box.Visible = false
+                if game.Players:FindFirstChild(plr.Name) == nil then
+                    c:Disconnect()
+                end
+            end
+        end)
+    end
+    coroutine.wrap(Update)()
+end
+
+for _,v in pairs(game:GetService("Players"):GetChildren()) do
+    if v.Name ~= Player.Name then 
+        DrawESP(v)
+    end
+end
+
+game:GetService("Players").PlayerAdded:Connect(function(v)
+    DrawESP(v)
+end)
+end
+
+-- Window
+local Window = Library:NewWindow("The Rake Remastered")
+
+-- Section
+local PlayerSection = Window:NewSection("Player")
+
+local EspSection = Window:NewSection("Esp")
+
+local CreditsSection = Window:NewSection("Credits")
+
+-- Toggle
+PlayerSection:CreateToggle("Inf Stamina", function(state)
+    if state then
+        _G.InfStamina = true
+        while _G.InfStamina == true do wait(1)
+        InfiniteStamina()
+        end
+    else
+        _G.InfStamina = false
+        DisableInfStaminaNotif()
+    end
+end)
+
+-- Button
+PlayerSection:CreateButton("No Fall Damage", function()
+NoFallDamage()
+ActivedNotif()
+end)
+
+PlayerSection:CreateButton("FullBright + No Fog", function()
+local function brightFunc()
+	game:GetService("Lighting").Brightness = 2
+	game:GetService("Lighting").ClockTime = 14
+	game:GetService("Lighting").FogEnd = 100000
+	game:GetService("Lighting").GlobalShadows = false
+	game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+end
+    local brightLoop = game:GetService("RunService").RenderStepped:Connect(brightFunc)
+ActivedNotif()
+end)
+
+EspSection:CreateButton("Rake Esp", function()
+RakeEsp()
+ActivedNotif()
+end)
+
+EspSection:CreateButton("Player Esp", function()
+PlayerEsp()
+ActivedNotif()
+end)
+
+CreditsSection:CreateButton("Script By | Nadir", function()
+    print("Nadir Hub")
+end)
+
+CreditsSection:CreateButton("Nadir#0106", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Credits/main/Username"))()
+end)
+
+CreditsSection:CreateButton("Copy Discord Invite Link", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/Credits/main/Discord"))()
+end)
